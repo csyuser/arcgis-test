@@ -19,7 +19,7 @@
                        :inline="true" size="small">
                 <el-form-item label="土地块数" class="form-item">
 <!--                  <div class="data" id="odometer" ref="odometer">1000</div>-->
-                  <Odometer class="data" :new-number="45000"></Odometer>
+                  <Odometer class="data" :new-number="45123"></Odometer>
                 </el-form-item>
                 <el-form-item label="土地交易面积" class="form-item">
                   <Odometer class="data" :new-number="45000"></Odometer>
@@ -40,7 +40,7 @@
                   <Odometer class="data" :new-number="45000"></Odometer>
                 </el-form-item>
                 <el-form-item label="已销售占比" class="form-item">
-                  <Odometer class="data" :new-number="45000"></Odometer>
+                  <div class="data">80%</div>
                 </el-form-item>
                 <el-form-item label="申报金额" class="form-item">
                   <Odometer class="data" :new-number="45000"></Odometer>
@@ -91,11 +91,11 @@ export default {
     return {
       formData: {
         name: '眉山市'
-      }
+      },
+      xxx:45000
     }
   },
   methods:{
-
   }
 }
 </script>

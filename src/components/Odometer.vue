@@ -9,11 +9,16 @@ export default {
   name: 'Odometer',
   props:{
     newNumber:{
-      type:Number
+      type:[Number,String]
     }
   },
   mounted(){
     this.initOdometer()
+  },
+  watch:{
+    newNumber(){
+      this.initOdometer()
+    }
   },
   methods:{
     initOdometer(){
