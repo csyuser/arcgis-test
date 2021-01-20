@@ -119,7 +119,9 @@
         </el-col>
         <el-col :span="6">
           <div class="grid-content">
-            <Angle class="right" title="增量房上市面积对比"></Angle>
+            <Angle class="right" title="增量房上市面积对比">
+              <div id="area" style="height: calc(100% - 45px); width: 100%"></div>
+            </Angle>
             <Angle class="right" title="增量房住宅上市面积对比"></Angle>
             <Angle class="right" title="增量房非住宅上市面积对比"></Angle>
           </div>
@@ -151,6 +153,7 @@ export default {
       let salesCountChart = this.$echarts.init(document.querySelector('#main'));
       let taxAmountChart = this.$echarts.init(document.querySelector('#taxAmount'));
       let lineChart = this.$echarts.init(document.querySelector('#lineTest'));
+      let areaChart = this.$echarts.init(document.querySelector('#area'));
       let data = {
         legendData:['眉山市','成都市','广安市','德阳市','南充市','绵阳市','遂宁市'],
         selected: {'眉山市':true, '成都市':true, '广安市':true, '德阳市':true,'南充市':false,'绵阳市':false,'遂宁市':false},
@@ -269,9 +272,64 @@ export default {
           },
         ]
       };
+      let barOption = {
+        // color: ['#3398DB'],
+        tooltip: {
+          trigger: 'axis',
+          axisPointer: {            // 坐标轴指示器，坐标轴触发有效
+            type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+          }
+        },
+        legend:{
+          data:['直接访问','电话访问'],
+          top:'10%',
+          textStyle:{
+            color:'#fff'
+          }
+        },
+        grid: {
+          // top:'15%',
+          left: '3%',
+          right: '4%',
+          bottom: '10%',
+          containLabel: true
+        },
+        xAxis: [
+          {
+            type: 'category',
+            data: ['Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat', 'Sun'],
+            axisTick: {
+              alignWithLabel: true
+            }
+          }
+        ],
+        yAxis: [{
+          type: 'value',
+          splitLine: {
+            show:false
+          },
+          axisLine: {show:true},
+          axisLabel: {show:true}
+        }],
+        series: [
+          {
+            name: '直接访问',
+            type: 'bar',
+            // barWidth: '30%',
+            data: [10, 52, 200, 334, 520, 330, 220]
+          },
+          {
+            name: '电话访问',
+            type: 'bar',
+            // barWidth: '30%',
+            data: [50, 50, 250, 134, 420, 630, 220]
+          }
+        ]
+      };
       salesCountChart.setOption(option);
       taxAmountChart.setOption(option);
       lineChart.setOption(lineOption)
+      areaChart.setOption(barOption)
     }
     },
 }
