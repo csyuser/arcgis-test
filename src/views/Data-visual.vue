@@ -65,7 +65,7 @@
               <el-form ref="form" :model="formData" label-width="125px" label="right" class="demo-form-inline"
                        :inline="true" size="small">
                 <el-form-item label="土地块数" class="form-item">
-<!--                  <div class="data" id="odometer" ref="odometer">1000</div>-->
+                  <!--                  <div class="data" id="odometer" ref="odometer">1000</div>-->
                   <Odometer class="data" :new-number="45123"></Odometer>
                 </el-form-item>
                 <el-form-item label="土地交易面积" class="form-item">
@@ -122,7 +122,26 @@
             <Angle class="right" title="增量房上市面积对比">
               <div id="area" style="height: calc(100% - 45px); width: 100%"></div>
             </Angle>
-            <Angle class="right" title="增量房住宅上市面积对比"></Angle>
+            <Angle class="right" title="访问情况">
+              <div class="ccc">
+                <div class="xxx" ref="xxx">
+                  <ul ref="">
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                  </ul>
+                  <ul ref="aaa">
+                    <li>1</li>
+                    <li>2</li>
+                    <li>3</li>
+                    <li>4</li>
+                    <li>5</li>
+                  </ul>
+                </div>
+              </div>
+            </Angle>
             <Angle class="right" title="增量房非住宅上市面积对比"></Angle>
           </div>
         </el-col>
@@ -137,7 +156,7 @@ import Odometer from '@/components/Odometer'
 
 export default {
   name: 'Data-visual',
-  components: {Angle,Odometer},
+  components: {Angle, Odometer},
   data() {
     return {
       formData: {
@@ -147,18 +166,37 @@ export default {
   },
   mounted() {
     this.drawChart()
+    this.$nextTick(() => {
+      let top = 0
+      let zzz = 5
+      setInterval(() => {
+        top -= 30
+        zzz -= 1
+        console.log(zzz)
+        if (zzz <= 0) {
+          top = 0
+          zzz = 5
+          // window.clearInterval(yyy);
+        }
+        this.$refs.xxx.style.marginTop = top + 'px'
+      }, 2000)
+
+    })
   },
-  methods:{
+  methods: {
     drawChart() {
-      let salesCountChart = this.$echarts.init(document.querySelector('#main'));
-      let taxAmountChart = this.$echarts.init(document.querySelector('#taxAmount'));
-      let lineChart = this.$echarts.init(document.querySelector('#lineTest'));
-      let areaChart = this.$echarts.init(document.querySelector('#area'));
+      let salesCountChart = this.$echarts.init(document.querySelector('#main'))
+      let taxAmountChart = this.$echarts.init(document.querySelector('#taxAmount'))
+      let lineChart = this.$echarts.init(document.querySelector('#lineTest'))
+      let areaChart = this.$echarts.init(document.querySelector('#area'))
       let data = {
-        legendData:['眉山市','成都市','广安市','德阳市','南充市','绵阳市','遂宁市'],
-        selected: {'眉山市':true, '成都市':true, '广安市':true, '德阳市':true,'南充市':false,'绵阳市':false,'遂宁市':false},
-        seriesData:[{name:'眉山市',value:2564},{name:'成都市',value:5210},{name:'广安市',value:2201},{name:'德阳市',value:4520},
-          {name:'南充市',value:2032},{name:'绵阳市',value:2014},{name:'遂宁市',value:3541},],
+        legendData: ['眉山市', '成都市', '广安市', '德阳市', '南充市', '绵阳市', '遂宁市'],
+        selected: {'眉山市': true, '成都市': true, '广安市': true, '德阳市': true, '南充市': false, '绵阳市': false, '遂宁市': false},
+        seriesData: [{name: '眉山市', value: 2564}, {name: '成都市', value: 5210}, {name: '广安市', value: 2201}, {
+          name: '德阳市',
+          value: 4520
+        },
+          {name: '南充市', value: 2032}, {name: '绵阳市', value: 2014}, {name: '遂宁市', value: 3541},],
       }
       let option = {
         tooltip: {
@@ -171,8 +209,8 @@ export default {
           right: 10,
           top: 20,
           bottom: 20,
-          textStyle:{
-            color:'#fff'
+          textStyle: {
+            color: '#fff'
           },
           data: data.legendData,
           selected: data.selected
@@ -193,7 +231,7 @@ export default {
             }
           }
         ]
-      };
+      }
       let lineOption = {
         // title: {
         //   text: '折线图堆叠'
@@ -204,8 +242,8 @@ export default {
         legend: {
           data: ['邮件营销', '联盟广告', '视频广告', '直接访问'],
           top: '5%',
-          textStyle:{
-            color:'#fff'
+          textStyle: {
+            color: '#fff'
           }
         },
         grid: {
@@ -223,7 +261,7 @@ export default {
           type: 'category',
           boundaryGap: false,
           data: ['周一', '周二', '周三', '周四', '周五', '周六', '周日'],
-          axisLabel:{
+          axisLabel: {
             color: '#fffff'
           }
         },
@@ -235,12 +273,12 @@ export default {
           //     color:['rgba(255,255,255,0.1)']
           //   }
           // },
-          axisLabel:{
+          axisLabel: {
             color: '#7fff00'
           },
-          axisTick:{show: true},
-          axisLine:{show: true},
-          splitLine:{
+          axisTick: {show: true},
+          axisLine: {show: true},
+          splitLine: {
             show: false,
             // color:'#333d62'
           }
@@ -271,7 +309,7 @@ export default {
             smooth: true,
           },
         ]
-      };
+      }
       let barOption = {
         // color: ['#3398DB'],
         tooltip: {
@@ -280,11 +318,11 @@ export default {
             type: 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
           }
         },
-        legend:{
-          data:['直接访问','电话访问'],
-          top:'10%',
-          textStyle:{
-            color:'#fff'
+        legend: {
+          data: ['直接访问', '电话访问'],
+          top: '10%',
+          textStyle: {
+            color: '#fff'
           }
         },
         grid: {
@@ -306,10 +344,10 @@ export default {
         yAxis: [{
           type: 'value',
           splitLine: {
-            show:false
+            show: false
           },
-          axisLine: {show:true},
-          axisLabel: {show:true}
+          axisLine: {show: true},
+          axisLabel: {show: true}
         }],
         series: [
           {
@@ -325,13 +363,13 @@ export default {
             data: [50, 50, 250, 134, 420, 630, 220]
           }
         ]
-      };
-      salesCountChart.setOption(option);
-      taxAmountChart.setOption(option);
+      }
+      salesCountChart.setOption(option)
+      taxAmountChart.setOption(option)
       lineChart.setOption(lineOption)
       areaChart.setOption(barOption)
     }
-    },
+  },
 }
 </script>
 
@@ -371,24 +409,35 @@ export default {
 
       > .left {
         height: 32%;
-        &.landTransaction{
-          > ul{
+
+        &.landTransaction {
+          > ul {
             display: flex;
             padding: 8px;
             border-top: 1px solid rgba(25, 186, 139, .17);
-            &.first{border-top: none;padding-top: 16px}
-            > li{
+
+            &.first {
+              border-top: none;
+              padding-top: 16px
+            }
+
+            > li {
               width: 33.33333%;
               color: #ffffff;
-              > h2{
+
+              > h2 {
                 font-size: 24px;
                 border-right: 1px solid rgba(25, 186, 139, .17);
               }
-              > span{
+
+              > span {
                 font-size: 14px;
               }
-              &:last-child{
-                > h2{ border-right:none;}
+
+              &:last-child {
+                > h2 {
+                  border-right: none;
+                }
               }
             }
           }
@@ -404,17 +453,20 @@ export default {
           display: flex;
           flex-wrap: wrap;
           justify-content: space-around;
+
           .form-item {
             margin-right: 25px;
-            &::v-deep{
-              .el-form-item__content{
+
+            &::v-deep {
+              .el-form-item__content {
                 display: inline-flex;
                 height: 32px;
                 align-items: center;
               }
             }
           }
-          .hide-item::v-deep{
+
+          .hide-item::v-deep {
             label {
               font-size: 0;
             }
@@ -438,6 +490,23 @@ export default {
 
       > .right {
         height: 32%;
+
+        .ccc {
+          overflow: hidden;
+          height: 150px;
+          .xxx {
+            > ul {
+              transition: all 1.5s;
+
+              > li {
+                height: 30px;
+                border: 1px solid red;
+              }
+            }
+          }
+        }
+
+
       }
     }
 
