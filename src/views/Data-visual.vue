@@ -7,14 +7,55 @@
       <el-row>
         <el-col :span="6">
           <div class="grid-content">
+            <Angle class="left landTransaction" title="土地交易情况">
+              <ul class="first">
+                <li>
+                  <h2>2012</h2>
+                  <span>交易面积</span>
+                </li>
+                <li>
+                  <h2>20%</h2>
+                  <span>同比</span>
+                </li>
+                <li>
+                  <h2>20%</h2>
+                  <span>环比</span>
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  <h2>450000</h2>
+                  <span>交易金额</span>
+                </li>
+                <li>
+                  <h2>20%</h2>
+                  <span>同比</span>
+                </li>
+                <li>
+                  <h2>20%</h2>
+                  <span>环比</span>
+                </li>
+              </ul>
+              <ul>
+                <li>
+                  <h2>10000</h2>
+                  <span>交易单价</span>
+                </li>
+                <li>
+                  <h2>20%</h2>
+                  <span>同比</span>
+                </li>
+                <li>
+                  <h2>20%</h2>
+                  <span>环比</span>
+                </li>
+              </ul>
+            </Angle>
             <Angle class="left" title="销售套数">
               <div id="main" style="height: calc(100% - 45px); width: 100%"></div>
             </Angle>
             <Angle class="left" title="缴纳税额">
               <div id="taxAmount" style="height: calc(100% - 45px); width: 100%"></div>
-            </Angle>
-            <Angle class="left" title="缴纳税额">
-              <div id="taxAmount2" style="height: calc(100% - 45px); width: 100%"></div>
             </Angle>
           </div>
         </el-col>
@@ -109,7 +150,6 @@ export default {
     drawChart() {
       let salesCountChart = this.$echarts.init(document.querySelector('#main'));
       let taxAmountChart = this.$echarts.init(document.querySelector('#taxAmount'));
-      let taxAmountChart2 = this.$echarts.init(document.querySelector('#taxAmount2'));
       let lineChart = this.$echarts.init(document.querySelector('#lineTest'));
       let data = {
         legendData:['眉山市','成都市','广安市','德阳市','南充市','绵阳市','遂宁市'],
@@ -186,12 +226,12 @@ export default {
         },
         yAxis: {
           type: 'value',
-          splitArea:{
-            show:true,
-            areaStyle:{
-              color:['rgba(255,255,255,0.1)']
-            }
-          },
+          // splitArea:{
+          //   show:true,
+          //   areaStyle:{
+          //     color:['rgba(255,255,255,0.1)']
+          //   }
+          // },
           axisLabel:{
             color: '#7fff00'
           },
@@ -231,7 +271,6 @@ export default {
       };
       salesCountChart.setOption(option);
       taxAmountChart.setOption(option);
-      taxAmountChart2.setOption(option);
       lineChart.setOption(lineOption)
     }
     },
@@ -274,7 +313,28 @@ export default {
 
       > .left {
         height: 32%;
-
+        &.landTransaction{
+          > ul{
+            display: flex;
+            padding: 8px;
+            border-top: 1px solid rgba(25, 186, 139, .17);
+            &.first{border-top: none;padding-top: 16px}
+            > li{
+              width: 33.33333%;
+              color: #ffffff;
+              > h2{
+                font-size: 24px;
+                border-right: 1px solid rgba(25, 186, 139, .17);
+              }
+              > span{
+                font-size: 14px;
+              }
+              &:last-child{
+                > h2{ border-right:none;}
+              }
+            }
+          }
+        }
       }
 
       > .center {
