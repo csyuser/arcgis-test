@@ -18,47 +18,47 @@
               <el-form ref="form" :model="formData" label-width="125px" label="right" class="demo-form-inline"
                        :inline="true" size="small">
                 <el-form-item label="土地块数" class="form-item">
-                  <div class="data" id="odometer">1000</div>
-                  <!--                  <el-input class="input-wrap" v-model="formData.name"></el-input>-->
+<!--                  <div class="data" id="odometer" ref="odometer">1000</div>-->
+                  <Odometer class="data" :new-number="45000"></Odometer>
                 </el-form-item>
                 <el-form-item label="土地交易面积" class="form-item">
-                  <div class="data">2000</div>
+                  <Odometer class="data" :new-number="45000"></Odometer>
                 </el-form-item>
                 <el-form-item label="土地交易金额" class="form-item">
-                  <div class="data">20000000</div>
+                  <Odometer class="data" :new-number="45000"></Odometer>
                 </el-form-item>
                 <el-form-item label="项目个数" class="form-item">
-                  <div class="data">1000</div>
+                  <Odometer class="data" :new-number="45000"></Odometer>
                 </el-form-item>
                 <el-form-item label="房屋总套数" class="form-item">
-                  <div class="data">1250</div>
+                  <Odometer class="data" :new-number="45000"></Odometer>
                 </el-form-item>
                 <el-form-item label="已售套数" class="form-item">
-                  <div class="data">1110</div>
+                  <Odometer class="data" :new-number="45000"></Odometer>
                 </el-form-item>
                 <el-form-item label="待售套数" class="form-item">
-                  <div class="data">12540</div>
+                  <Odometer class="data" :new-number="45000"></Odometer>
                 </el-form-item>
                 <el-form-item label="已销售占比" class="form-item">
-                  <div class="data">80%</div>
+                  <Odometer class="data" :new-number="45000"></Odometer>
                 </el-form-item>
                 <el-form-item label="申报金额" class="form-item">
-                  <div class="data">102848601</div>
+                  <Odometer class="data" :new-number="45000"></Odometer>
                 </el-form-item>
                 <el-form-item label="销售金额" class="form-item">
-                  <div class="data">12540.541</div>
+                  <Odometer class="data" :new-number="45000"></Odometer>
                 </el-form-item>
                 <el-form-item label="印花税" class="form-item">
-                  <div class="data">501548201</div>
+                  <Odometer class="data" :new-number="45000"></Odometer>
                 </el-form-item>
                 <el-form-item label="城镇土地使用税" class="form-item">
-                  <div class="data">12482015</div>
+                  <Odometer class="data" :new-number="45000"></Odometer>
                 </el-form-item>
                 <el-form-item label="资源税" class="form-item">
-                  <div class="data">4521025</div>
+                  <Odometer class="data" :new-number="45000"></Odometer>
                 </el-form-item>
                 <el-form-item label="环保税" class="form-item">
-                  <div class="data">12587135</div>
+                  <Odometer class="data" :new-number="45000"></Odometer>
                 </el-form-item>
                 <el-form-item label="xxx" class="form-item hide-item">
                   <div class="data"></div>
@@ -82,11 +82,11 @@
 
 <script>
 import Angle from '@/components/Angle'
-import Odometer from '@/assets/control/xxx'
+import Odometer from '@/components/Odometer'
 
 export default {
   name: 'Data-visual',
-  components: {Angle},
+  components: {Angle,Odometer},
   data() {
     return {
       formData: {
@@ -94,27 +94,8 @@ export default {
       }
     }
   },
-  mounted(){
-    this.initOtometer()
-  },
   methods:{
-    initOtometer(){
-//滚动数字
-      let newNumber2 = 30000
-      let el = document.querySelector('#odometer');
 
-      let od = new Odometer({
-        el: el,
-        value: 0,
-        format: '(,ddd).dd',
-        theme: 'default'
-      });
-      od.update(newNumber2)
-      document.querySelector('#odometerBtn').addEventListener('click',()=>{
-        newNumber2 = 35012
-        od.update(newNumber2)
-      })
-    }
   }
 }
 </script>
@@ -166,11 +147,16 @@ export default {
           padding: 20px 0;
           display: flex;
           flex-wrap: wrap;
-          //margin-left: -10px;
-          //margin-right: -10px;
           justify-content: space-around;
           .form-item {
             margin-right: 25px;
+            &::v-deep{
+              .el-form-item__content{
+                display: inline-flex;
+                height: 32px;
+                align-items: center;
+              }
+            }
           }
           .hide-item::v-deep{
             label {
@@ -191,17 +177,6 @@ export default {
               color: #ffffff;
             }
           }
-
-          //.input-wrap ::v-deep {
-          //  > input {
-          //    border: none;
-          //    border-radius: 0;
-          //    background-color: rgba(255, 255, 255, 0);
-          //    color: #ffffff;
-          //    padding: 0 0 0 10px;
-          //    width: 74px;
-          //  }
-          //}
         }
       }
 
