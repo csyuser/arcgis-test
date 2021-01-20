@@ -19,6 +19,7 @@ export default {
 .angle {
   position: relative;
   border: 1px solid rgba(25, 186, 139, .17);
+  //border: 1px solid #087ec7;
   background: url("../assets/images/line.png") no-repeat;
   background-size: 100%;
   padding: 0 20px 20px 20px;
