@@ -1,56 +1,69 @@
-
 <template>
-    <div class="mapdiv">
-      <div class="home" ref="home"></div>
-    </div>
+  <div class="mapdiv">
+    <h3>Select a basemap</h3>
+    <div class="home" ref="home"></div>
+  </div>
 </template>
 
 <script>
-import WebMap from "@arcgis/core/WebMap";
-import MapView from "@arcgis/core/views/MapView";
-import Bookmarks from "@arcgis/core/widgets/Bookmarks";
-import Expand from "@arcgis/core/widgets/Expand";
+import Map from '@arcgis/core/Map'
+import MapView from '@arcgis/core/views/MapView'
+import BasemapToggle from '@arcgis/core/widgets/BasemapToggle'
+import BasemapGallery from '@arcgis/core/widgets/BasemapGallery'
+
 export default {
   name: 'App',
+  data() {
+    return{
+      view:{},
+      webMap:{}
+    }
+  },
   async mounted() {
-    console.log('this.$el')
-    console.log(this.$el)
-    const webmap = new WebMap({
-      portalItem: {
-        id: "aa1d3f80270146208328cf66d022e09c",
-      },
-    });
-    const view = new MapView({
-      container: this.$refs.home,
-      map: webmap,
-    });
-    const bookmarks = new Bookmarks({
-      view: view,
-      // allows bookmarks to be added, edited, or deleted
-      editingEnabled: true,
-    });
-    const bkExpand = new Expand({
-      view: view,
-      content: bookmarks,
-      expanded: true,
-    });
-    // Add the widget to the top-right corner of the view
-    view.ui.add(bkExpand, "top-right");
-    // bonus - how many bookmarks in the webmap?
-    webmap.when(function () {
-      if (webmap.bookmarks && webmap.bookmarks.length) {
-        console.log("Bookmarks: ", webmap.bookmarks.length);
-      } else {
-        console.log("No bookmarks in this webmap.");
-      }
-    });
+    this.initMap()
+  },
+  methods: {
+    initMap(){
+      this.webMap = new Map({
+        basemap: 'streets-navigation-vector'
+      })
+      this.view = new MapView({
+        container: this.$refs.home,
+        map: this.webMap,
+        center: [-118.805, 34.027], // longitude, latitude
+        zoom: 13
+      })
+      this.addBaseMapToggle()
+      this.addBaseMapGallery()
+    },
+    addBaseMapToggle() {
+      const basemapToggle = new BasemapToggle({
+        view: this.view,
+        nextBasemap: 'satellite'
+      })
+      this.view.ui.add(basemapToggle, "bottom-right");
+    },
+    addBaseMapGallery(){
+      const basemapGallery = new BasemapGallery({
+        view: this.view,
+        source: {
+          portal: {
+            url: "https://www.arcgis.com",
+            // useVectorBasemaps: true // Load vector tile basemaps
+            useVectorBasemaps: false // Load raster tile basemaps
+          }
+        }
+      });
+      this.view.ui.add(basemapGallery, "top-right");
+    }
   }
 }
 </script>
 
 <style scoped lang="scss">
-.home{
-  height: 300px;
-  width: 1000px;
+.home {
+  margin-left: 10px;
+  height: 700px;
+  width: 95%;
 }
 </style>
