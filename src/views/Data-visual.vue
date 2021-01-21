@@ -61,8 +61,18 @@
         </el-col>
         <el-col :span="12">
           <div class="grid-content">
-            <Angle class="center" title="增量房上市情况">
-              <el-form ref="form" :model="formData" label-width="125px" label="right" class="demo-form-inline"
+            <Angle class="center">
+              <ul class="overview">
+                <li>
+                  <Odometer class="Odometer" :new-number="45123"></Odometer>
+                  <span>总纳税金额</span>
+                </li>
+                <li>
+                  <Odometer class="Odometer" :new-number="45123"></Odometer>
+                  <span>总交易金额</span>
+                </li>
+              </ul>
+              <el-form ref="form" :model="formData" label-width="125px" label="right" class="demo-form-inline form"
                        :inline="true" size="small">
                 <el-form-item label="土地块数" class="form-item">
                   <!--                  <div class="data" id="odometer" ref="odometer">1000</div>-->
@@ -101,15 +111,9 @@
                 <el-form-item label="城镇土地使用税" class="form-item">
                   <Odometer class="data" :new-number="45000"></Odometer>
                 </el-form-item>
-                <el-form-item label="资源税" class="form-item">
-                  <Odometer class="data" :new-number="45000"></Odometer>
-                </el-form-item>
-                <el-form-item label="环保税" class="form-item">
-                  <Odometer class="data" :new-number="45000"></Odometer>
-                </el-form-item>
-                <el-form-item label="xxx" class="form-item hide-item">
-                  <div class="data"></div>
-                </el-form-item>
+                <!--                <el-form-item label="xxx" class="form-item hide-item">-->
+                <!--                  <div class="data"></div>-->
+                <!--                </el-form-item>-->
               </el-form>
             </Angle>
             <Angle class="center" title="数据概览">
@@ -134,7 +138,19 @@
                 </div>
               </div>
             </Angle>
-            <Angle class="right" title="增量房非住宅上市面积对比"></Angle>
+            <Angle class="right" title="处理进度">
+              <ul class="progress">
+                <li>
+                  <el-progress type="dashboard" :percentage="60" class="progressItem"></el-progress>
+                  <p>成都市</p></li>
+                <li>
+                  <el-progress type="dashboard" :percentage="50" color="#fccb00" class="progressItem"></el-progress>
+                  <p>眉山市</p></li>
+                <li>
+                  <el-progress type="dashboard" :percentage="30" color="#62b62f" class="progressItem"></el-progress>
+                  <p>德阳市</p></li>
+              </ul>
+            </Angle>
           </div>
         </el-col>
       </el-row>
@@ -371,7 +387,7 @@ export default {
           }
         }, 2000)
       })
-    },
+    }
   },
 
   beforeDestroy() {
@@ -455,7 +471,36 @@ export default {
         margin: 0 30px;
         height: 48%;
 
-        > form {
+        > .overview {
+          display: flex;
+          justify-content: space-around;
+          padding: 20px 0;
+          border-bottom: 1px solid rgba(25, 186, 139, 0.17);
+
+          > li {
+            display: flex;
+            width: 50%;
+            flex-direction: column;
+
+            &:first-child {
+              > .Odometer {
+                border-right: 1px solid rgba(25, 186, 139, 0.5);
+              }
+            }
+
+            > .Odometer {
+              font-size: 56px;
+              color: #ffeb7b;
+            }
+
+            > span {
+              font-size: 18px;
+              color: #637c9f;
+            }
+          }
+        }
+
+        > .form {
           padding: 20px 0;
           display: flex;
           flex-wrap: wrap;
@@ -522,6 +567,26 @@ export default {
           }
         }
 
+        > .progress {
+          margin-top: 20px;
+          display: flex;
+          justify-content: space-around;
+
+          > li {
+            width: 33.3333%;
+
+            > p {
+              color: #ffffff;
+            }
+
+            > .progressItem ::v-deep {
+              > .el-progress__text {
+                color: #ffffff;
+              }
+            }
+
+          }
+        }
 
       }
     }
