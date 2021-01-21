@@ -1,7 +1,10 @@
 <template>
   <el-container class="wrapper">
     <el-header class="header" style="height: auto">
-      <img src="../assets/images/top_title.png" alt="">
+<!--      <img src="../assets/images/top_title.png" alt="">-->
+      <span class="fl"><img src="../assets/images/title-left.png" ></span>
+      <span class="title fl">数据展示</span>
+      <span class="fr"><img src="../assets/images/title-right.png" ></span>
     </el-header>
     <el-main class="main-content">
       <el-row>
@@ -399,12 +402,21 @@ export default {
 <style scoped lang='scss'>
 .wrapper {
   height: 100vh;
-  background: url("../assets/images/bg.png") no-repeat;
+  //background: url("../assets/images/bg.png") no-repeat;
   //background: #000c3b;
+  background: #142537;
 
   > .header {
     width: 100%;
     padding-top: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-size: 30px;
+    > .title{
+      padding: 0 100px 5px 100px;
+    }
 
     > img {
       width: 100%;
