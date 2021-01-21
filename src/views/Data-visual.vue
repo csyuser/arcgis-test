@@ -123,21 +123,13 @@
               <div id="area" style="height: calc(100% - 45px); width: 100%"></div>
             </Angle>
             <Angle class="right" title="访问情况">
-              <div class="ccc">
-                <div class="xxx" ref="xxx">
-                  <ul ref="">
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
+              <div class="ccc" ref="ccc">
+                <div class="xxx" ref="xxx" id="xxx">
+                  <ul>
+                    <li v-for="item in scrollData" :key="item.id">{{ item.value }}</li>
                   </ul>
-                  <ul ref="aaa">
-                    <li>1</li>
-                    <li>2</li>
-                    <li>3</li>
-                    <li>4</li>
-                    <li>5</li>
+                  <ul>
+                    <li v-for="item in scrollData" :key="item.id">{{ item.value }}</li>
                   </ul>
                 </div>
               </div>
@@ -162,26 +154,15 @@ export default {
       formData: {
         name: '眉山市'
       },
+      interval: null,
+      scrollData: [{id: '1', value: '看呀，这是第一条消息'}, {id: '2', value: '看呀，这是第二条消息'}, {id: '3', value: '看呀，这是第三条消息'},
+        {id: '4', value: '看呀，这是第四条消息'}, {id: '5', value: '看呀，这是第五条消息'}, {id: '6', value: '看呀，这是第六条消息'},
+      ]
     }
   },
   mounted() {
     this.drawChart()
-    this.$nextTick(() => {
-      let top = 0
-      let zzz = 5
-      setInterval(() => {
-        top -= 30
-        zzz -= 1
-        console.log(zzz)
-        if (zzz <= 0) {
-          top = 0
-          zzz = 5
-          // window.clearInterval(yyy);
-        }
-        this.$refs.xxx.style.marginTop = top + 'px'
-      }, 2000)
-
-    })
+    this.scroll()
   },
   methods: {
     drawChart() {
@@ -368,8 +349,34 @@ export default {
       taxAmountChart.setOption(option)
       lineChart.setOption(lineOption)
       areaChart.setOption(barOption)
-    }
+    },
+    scroll() {
+      this.$nextTick(() => {
+        let top = 0
+        let zzz = this.scrollData.length
+        this.$refs.ccc.style.height = zzz * 30 + 'px'
+        this.$refs.ccc.style.maxHeight = 190 + 'px'
+        this.interval = setInterval(() => {
+          top -= 30
+          zzz -= 1
+          if (zzz < 0) {
+            top = 0
+            zzz = this.scrollData.length
+            this.$refs.xxx.style.marginTop = '0'
+            this.$refs.xxx.style.transition = 'none'
+            // time = 0
+          } else {
+            this.$refs.xxx.style.marginTop = top + 'px'
+            this.$refs.xxx.style.transition = 'all 1s linear'
+          }
+        }, 2000)
+      })
+    },
   },
+
+  beforeDestroy() {
+    window.clearInterval(this.interval)
+  }
 }
 </script>
 
@@ -493,14 +500,23 @@ export default {
 
         .ccc {
           overflow: hidden;
-          height: 150px;
+          height: 190px;
+
           .xxx {
+            //transition: all 1.5s linear;
+            height: 250px;
+
             > ul {
-              transition: all 1.5s;
+              transition: all 1.5s linear;
 
               > li {
                 height: 30px;
-                border: 1px solid red;
+                border: 1px solid rgba(25, 186, 139, .17);
+                font-size: 14px;
+                color: #ffffff;
+                line-height: 30px;
+                text-align: center;
+                padding: 0 2em;
               }
             }
           }
