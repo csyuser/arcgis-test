@@ -67,8 +67,8 @@
             <Angle class="center">
               <ul class="overview">
                 <li>
-                  <Odometer class="Odometer" :new-number="45123"></Odometer>
-                  <span>总纳税金额</span>
+                  <Odometer class="Odometer" :new-number="taxNumber"></Odometer>
+                  <span @click="vvv = 45123">总纳税金额</span>
                 </li>
                 <li>
                   <Odometer class="Odometer" :new-number="45123"></Odometer>
@@ -176,12 +176,18 @@ export default {
       interval: null,
       scrollData: [{id: '1', value: '看呀，这是第一条消息'}, {id: '2', value: '看呀，这是第二条消息'}, {id: '3', value: '看呀，这是第三条消息'},
         {id: '4', value: '看呀，这是第四条消息'}, {id: '5', value: '看呀，这是第五条消息'}, {id: '6', value: '看呀，这是第六条消息'},
-      ]
+      ],
+      taxNumber:45000,
+      interval2:null
     }
   },
   mounted() {
     this.drawChart()
     this.scroll()
+    this.interval2 = setInterval(()=>{
+      let number = Math.floor(Math.random()*100)
+      this.taxNumber += number
+    },5000)
   },
   methods: {
     drawChart() {
@@ -395,6 +401,7 @@ export default {
 
   beforeDestroy() {
     window.clearInterval(this.interval)
+    window.clearInterval(this.interval2)
   }
 }
 </script>

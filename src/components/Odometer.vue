@@ -29,7 +29,8 @@ export default {
         el: el,
         value: 0,
         format: '(,ddd).dd',
-        theme: 'default'
+        duration:5000,
+        theme: 'default',
       });
       od.update(this.newNumber)
     }
